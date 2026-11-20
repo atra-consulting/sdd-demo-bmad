@@ -95,7 +95,7 @@ Die Aufgabe: Jede Blog-Seite zeigt eine geschätzte Lesezeit an.
 
 Der volle Ablauf: Hilfe fragen, PRD im Gespräch, Spezifikation, Umsetzung mit Prüf-Subagenten, Durchsicht. Hilfe und Durchsicht kannst du überspringen.
 
-**Warum neue Sitzungen?** So arbeitet die Fabrik am zweiten Tag: Jeder Schritt ist ein eigener Lauf, der bei null beginnt. Dazwischen prüft ein Mensch das Ergebnis und gibt es frei. Die neue Sitzung zeigt das im Kleinen. Du prüfst und committest, und der nächste Schritt findet den Stand allein in den Dateien im Repo, ohne Gedächtnis der letzten Sitzung.
+Alles läuft in **einer** Copilot-Sitzung, Schritt für Schritt. BMad meldet Status statt Freigaben: `complete`, `partial` oder `blocked`. Zwischen den Schritten prüfst du das Ergebnis und committest im zweiten Terminal.
 
 Öffne ein **zweites Terminal** im selben Ordner. Dort schaust du nach, was Copilot geschrieben hat.
 
@@ -110,8 +110,6 @@ Der volle Ablauf: Hilfe fragen, PRD im Gespräch, Spezifikation, Umsetzung mit P
 Beim Bau dieses Repos empfahl BMad hier `bmad-prd` und `bmad-spec`.
 
 ### 2. PRD, im Gespräch
-
-In derselben Sitzung:
 
 ```text
 /bmad-prd Show an estimated reading time on each blog post page, based on 200 words per minute, rounded up to whole minutes. Add unit tests.
@@ -131,11 +129,9 @@ In derselben Sitzung:
 
 Im Vortest kostete das etwa 15 AI Credits in 1,5 Minuten.
 
-**Prüfen (zweites Terminal):** `cat _bmad-output/planning-artifacts/prds/*/prd.md`. Dann `/exit` und `git add -A && git commit -m "Lesezeit: PRD"`.
+**Prüfen (zweites Terminal):** `cat _bmad-output/planning-artifacts/prds/*/prd.md`. Dann committen: `git add -A && git commit -m "Lesezeit: PRD"`.
 
 ### 3. Spezifikation
-
-Starte Copilot neu und vertrau dem Ordner wieder mit `1. Yes`. Dann:
 
 ```text
 /bmad-spec Input: the PRD in _bmad-output/planning-artifacts/prds/. slug: reading-time.
@@ -143,12 +139,12 @@ Starte Copilot neu und vertrau dem Ordner wieder mit `1. Yes`. Dann:
 
 **Was du sehen solltest:**
 
-- BMad liest das PRD aus Schritt 2, nur aus der Datei.
+- BMad liest das PRD aus Schritt 2.
 - Wieder Rückfragen zu `uv run _bmad/scripts/memlog.py …`.
 - Ergebnis: `_bmad-output/specs/spec-reading-time/SPEC.md` mit Fähigkeiten, Einschränkungen und Nicht-Zielen.
 - Interaktiv bespricht BMad das Ergebnis mit dir. Antworte kurz oder bestätige.
 
-Dann `/exit` und committen. Das ist die Freigabe, die in der Fabrik in Jira passiert.
+Dann committen. Das ist die Freigabe, die in der Fabrik in Jira passiert.
 
 ### 4. Umsetzen
 
@@ -158,14 +154,13 @@ Ab jetzt schreibt Copilot Code und lässt Tests laufen. Nenn ihm den Testbefehl 
 Factory rules: edit files with your file tools, not with shell scripts. Run the tests with exactly: ./bin/phpunit
 ```
 
-`/bmad-build-auto` ist BMads „eine Runde Entwicklung ohne Mensch“: kurze eigene Spezifikation, Umsetzung, Prüf-Subagenten, Commit. Es braucht einen sauberen Stand und einen eigenen Branch:
+`/bmad-build-auto` ist BMads „eine Runde Entwicklung ohne Mensch“: kurze eigene Spezifikation, Umsetzung, Prüf-Subagenten, Commit. Es braucht einen sauberen Stand und einen eigenen Branch. Im zweiten Terminal:
 
 ```bash
 git switch -c reading-time
-copilot --model claude-sonnet-5.5
 ```
 
-Vertrau dem Ordner wieder, dann:
+Dann, in Copilot:
 
 ```text
 /bmad-build-auto The approved spec is _bmad-output/specs/spec-reading-time/SPEC.md.
@@ -191,8 +186,6 @@ Statt `/bmad-build-auto` geht auch `/bmad-build`, die interaktive Form. Es setzt
 - `/bmad-walkthrough` führt dich laut BMad durch die Änderung: wofür sie ist, worauf du achten sollst und wie du sie testest.
 - `/bmad-code-review` lässt mehrere unabhängige Prüfer parallel auf die Änderung schauen und sortiert die Befunde.
 
-In derselben Sitzung:
-
 ```text
 /bmad-walkthrough Walk me through the last commit on this branch.
 ```
@@ -201,15 +194,14 @@ In derselben Sitzung:
 
 Die Aufgabe: Tags, die sich nur in Groß- und Kleinschreibung unterscheiden, entstehen doppelt.
 
-BMads kurzer Weg: `/bmad-build-auto` direkt mit der Aufgabe, ohne PRD und ohne Spezifikation, in **einer** Sitzung. Es schreibt seine eigene kurze Spezifikation. Zurück auf `main`, dann ein eigener Branch:
+BMads kurzer Weg: `/bmad-build-auto` direkt mit der Aufgabe, ohne PRD und ohne Spezifikation. Es schreibt seine eigene kurze Spezifikation. Im zweiten Terminal zurück auf `main`, dann ein eigener Branch:
 
 ```bash
 git switch main
 git switch -c tag-case
-copilot --model claude-sonnet-5.5
 ```
 
-Vertrau dem Ordner wieder, dann:
+Dann, in Copilot:
 
 ```text
 /bmad-build-auto Tag names that differ only in upper and lower case create duplicate tags. Normalize tag names to lowercase when saving. Add a regression test.
@@ -301,15 +293,14 @@ TICKET>>>
 
 Die Werte stammen aus Vortests mit denselben Versionen. Bei dir können sie abweichen. Copilot Pro bietet 1.500 AI Credits im Monat. Den Verbrauch siehst du unten rechts in Copilot und nach `/exit`.
 
-## Was in allen Vortests galt
+## Die Fabrik am zweiten Tag
 
-- **BMad hat Status statt Freigaben.** `bmad-prd` und `bmad-spec` melden `complete`, `partial` oder `blocked`, `bmad-build-auto` am Ende `done` oder `blocked`. Prüfen ist deine Aufgabe zwischen den Schritten.
-- **Den Stand findet Copilot allein in `_bmad-output/`.**
-- **Copilot fragt interaktiv vor jedem Schreiben.** Unbeaufsichtigt fragt es nicht, sondern lehnt ab. Die Regel für BMads Skripte heißt dort `shell(uv:*)`. Die erlaubt beliebigen Python-Code. Den unbeaufsichtigten Betrieb zeigt ein optionaler Teil am zweiten Tag, mit eigener Anleitung.
+Die Fabrik nimmt BMad, wenn das Jira-Ticket das Label `sdd-bmad` hat. Sie macht dieselben Schritte wie du hier, mit zwei Unterschieden:
 
-## Tag 2: die Fabrik
+- **Copilot fragt nicht.** Eine Liste freigegebener Werkzeuge ersetzt deine „Yes“-Antworten. Was nicht auf der Liste steht, lehnt Copilot ab, ohne zu fragen. Der Prozess endet trotzdem mit Exit-Code 0. Bei BMad steht dort `shell(uv:*)` für seine Skripte. Diese Regel erlaubt beliebigen Python-Code. Beim Umsetzen kommt `./bin/phpunit` dazu.
+- **Neue Sitzungen an zwei Stellen.** Die Fabrik arbeitet in zwei Läufen: erst die Spezifikation, dann die Umsetzung. Dazwischen prüft ein Mensch die Spezifikation und gibt sie in Jira frei. Jeder Lauf beginnt mit einer neuen Copilot-Sitzung. Den Stand findet er nur in den Dateien im Repo. Im Spezifikations-Lauf ruft die Fabrik `bmad-prd` und `bmad-spec` je in einem eigenen Copilot-Aufruf auf, im Headless-Modus.
 
-Die Fabrik nimmt BMad, wenn das Jira-Ticket das Label `sdd-bmad` hat.
+Hier, lokal, ist alles ein durchgehender Ablauf in einer Sitzung. Den unbeaufsichtigten Betrieb zeigt ein optionaler Teil am zweiten Tag, mit eigener Anleitung.
 
 ## Lizenzen
 
