@@ -201,19 +201,6 @@ Factory rules: edit files with your file tools, not with shell scripts. Run the 
 - Vier Prüf-Subagenten: „blind hunter“, „edge case hunter“, „verification gap“ und „intent alignment“.
 - Die Korrektur in `src/Form/DataTransformer/TagArrayToStringTransformer.php` mit Regressionstest, Status `done` und ein Commit auf `tag-case`.
 
-## Runde 3: Feature „Beiträge pro Tag“ (falls noch Zeit ist)
-
-```text
-Show the number of published posts next to each tag name in the tag badges, for example "symfony (12)". Count all published posts with that tag, not only the ones on the current page. Add tests.
-```
-
-Probier dabei BMads Planungsseite:
-
-- **Agent:** `/agent`, dann John (Product Manager). Besprich mit ihm die Aufgabe, bevor du ein PRD schreibst.
-- **Diskussion:** `/bmad-party-mode` lässt mehrere Agenten gemeinsam diskutieren.
-- **Idee prüfen:** `/bmad-forge-idea` klopft die Idee mit verschiedenen Rollen auf Schwächen ab.
-- **Architektur und UX:** `/bmad-architecture`, `/bmad-ux`.
-
 ## Mit einem echten Jira-Ticket
 
 Ein Jira-Ticket ist Text von außen. Für das Modell soll es **Daten** sein, keine Anweisung. So rahmt auch die Fabrik am zweiten Tag jedes Ticket ein: Befehl in die erste Zeile, Block darunter, alles zusammen in Copilot einfügen.
