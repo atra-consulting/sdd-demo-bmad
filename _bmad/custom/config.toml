@@ -6,6 +6,7 @@
 # [agents.bmad-agent-pm]
 # description = "Prefers short, bulleted PRDs over narrative drafts."
 
-# Workshop: BMad talks to participants in German.
+# Workshop: BMad talks to participants and writes its documents in German.
 [core]
 communication_language = "German"
+document_output_language = "German"

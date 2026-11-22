@@ -93,7 +93,7 @@ copilot --model claude-sonnet-5.5
 
 Jedes Ticket bekommt eine **eigene** Copilot-Sitzung. Am Ende einer Runde gibst du `/exit` ein. Copilot zeigt dann, was die Sitzung verbraucht hat: AI Credits, Dauer und Tokens. Für die nächste Runde startest du Copilot neu.
 
-BMad antwortet auf Deutsch, das legt `_bmad/custom/config.toml` fest. Seine Dokumente wie PRD und Spezifikation schreibt BMad auf Englisch. Am Ende vieler Schritte schlägt BMad einen nächsten vor. Folge trotzdem dieser README. Die Prompts in dieser README sind auf Deutsch. Unsere Tests liefen mit den englischen Fassungen derselben Prompts, und BMad antwortete dort auf Englisch. Copilot antwortet nie zweimal gleich. „Was du sehen solltest“ beschreibt die Art der Ausgabe, nicht den Wortlaut.
+BMad antwortet auf Deutsch und schreibt auch seine Dokumente wie PRD und Spezifikation auf Deutsch. Das legt `_bmad/custom/config.toml` fest. Am Ende vieler Schritte schlägt BMad einen nächsten vor. Folge trotzdem dieser README. Die Prompts in dieser README sind auf Deutsch. Unsere Tests liefen mit den englischen Fassungen derselben Prompts, und BMad antwortete und schrieb dort auf Englisch. Copilot antwortet nie zweimal gleich. „Was du sehen solltest“ beschreibt die Art der Ausgabe, nicht den Wortlaut.
 
 ## Einmalig: Projektregeln festlegen
 
@@ -254,14 +254,13 @@ npx -y bmad-method@6.12.4 install --directory . --modules bmm --tools github-cop
 - `--user-name Team` landet als `user_name` in `_bmad/config.user.toml`.
 - `--yes` nimmt für alle übrigen Fragen die Vorgaben. In `_bmad/config.toml` steht danach `communication_language = "English"`.
 
-Für den Workshop haben wir danach Deutsch als Sprache für BMads Antworten eingestellt, in `_bmad/custom/config.toml`. Diese Datei überschreibt der Installer nie:
+Für den Workshop haben wir danach Deutsch eingestellt, für BMads Antworten und Dokumente, in `_bmad/custom/config.toml`. Diese Datei überschreibt der Installer nie:
 
 ```toml
 [core]
 communication_language = "German"
+document_output_language = "German"
 ```
-
-Willst du auch PRD und Spezifikation auf Deutsch, ergänze dort `document_output_language = "German"`.
 
 Danach fehlt noch der Block mit deinen Regeln in `AGENTS.md`. Die Projektregeln legst du einmal selbst fest, wie in „Einmalig: Projektregeln festlegen“.
 
@@ -273,7 +272,7 @@ Danach fehlt noch der Block mit deinen Regeln in `AGENTS.md`. Die Projektregeln 
 | 2 | Stand nach `composer install`, ohne die CI-Workflows von `symfony/demo`. Dessen README steht in [`README.symfony-demo.md`](README.symfony-demo.md). |
 | 3 | BMad 6.12.4 mit `npx bmad-method@6.12.4 install --modules bmm --tools github-copilot` |
 | 4 | Diese README |
-| später | Deutsch als Sprache für BMads Antworten, in `_bmad/custom/config.toml` |
+| später | Deutsch als Sprache für BMads Antworten und Dokumente, in `_bmad/custom/config.toml` |
 
 BMad hat `.agents/skills/bmad-*` (29 Skills), `.github/agents/` (5 Agenten) und `_bmad/` (Konfiguration und Skripte) angelegt. `copilot skill list` zeigt alle Skills.
 
