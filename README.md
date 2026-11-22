@@ -40,7 +40,7 @@ Freigeben musst du trotzdem selbst. Nach jedem Schritt prüfst du.
 - **Ein Copilot-Platz mit Claude Sonnet 5.5**, zum Beispiel Copilot Pro. Copilot Free reicht nicht. Bekommst du Copilot über deine Firma, muss deren Richtlinie die Copilot CLI erlauben.
 - **Copilot CLI 1.0.112 oder neuer.**
 - **PHP 8.4 oder neuer** mit `pdo_sqlite`, `intl`, `mbstring` und `xml`, dazu **Composer** und **git**.
-- **uv.** Die Skills starten Python-Skripte mit `uv run`. uv holt sich das passende Python selbst. Node.js brauchst du nicht.
+- **uv.** Die Skills starten Python-Skripte mit `uv run`. uv holt sich das passende Python selbst. Node.js brauchst du zum Arbeiten nicht.
 
 Auf dem Mac:
 
@@ -97,7 +97,7 @@ BMad antwortet auf Englisch, das legt `_bmad/config.toml` fest. Am Ende vieler S
 
 ## Einmalig: Projektregeln festlegen
 
-Das machst du einmal pro Repo, in der ersten Sitzung vor Runde 1. `/bmad-project-context` schreibt deine Regeln als Block in `AGENTS.md`. Copilot liest `AGENTS.md` bei jedem Start.
+Das machst du einmal pro Repo, in der ersten Sitzung vor Runde 1. BMad selbst liegt schon im Repo, siehe „So haben wir BMad installiert“. `/bmad-project-context` schreibt deine Regeln als Block in `AGENTS.md`. Copilot liest `AGENTS.md` bei jedem Start.
 
 ```text
 /bmad-project-context setup. Meine Regeln: Keine neuen Abhängigkeiten. Jede Änderung bringt PHPUnit-Tests mit. Starte die Tests immer genau so: ./bin/phpunit
@@ -239,6 +239,21 @@ TICKET>>>
 Die Runden stammen aus einem Test am 21. November 2026 mit Copilot CLI 1.0.114. Ein Skript beantwortete die Rückfragen, jeweils nach bis zu 15 Sekunden. Beide Runden liefen in einer Sitzung, spätere Schritte lasen also den ganzen Verlauf mit. Mit einer Sitzung pro Ticket liest Runde 2 den Verlauf von Runde 1 nicht mit. Am Ende von Runde 2 verdichtete Copilot den Verlauf („Compaction completed“). `/bmad-build-auto` kostete in beiden Runden zusammen 161 AI Credits, gut drei Viertel der Summe. Es startet einen Subagenten zum Umsetzen und vier zum Prüfen.
 
 Die Fabrikwerte stammen aus Vortests im November 2026 mit denselben Versionen der Frameworks. Bei dir können die Werte abweichen. Copilot Pro bietet 1.500 AI Credits im Monat. Deinen Verbrauch zeigt Copilot unten rechts als „Session: … AIC used“ und nach `/exit`.
+
+## So haben wir BMad installiert
+
+BMad liegt schon in diesem Repo. Für ein eigenes Repo gehst du so vor wie wir. Du brauchst dafür Node.js, aber nur für die Installation.
+
+```bash
+cd <dein-repo>
+npx -y bmad-method@6.12.4 install --directory . --modules bmm --tools github-copilot --user-name Team --yes
+```
+
+- `--modules bmm` installiert das Modul `bmm` für Softwareprojekte. Das Modul `core` kommt immer dazu.
+- `--tools github-copilot` richtet die Skills und Agenten für die Copilot CLI ein.
+- `--yes` nimmt für alle übrigen Fragen die Vorgaben. In `_bmad/config.toml` steht danach `communication_language = "English"`. Darum antwortet BMad auf Englisch.
+
+Danach fehlt noch der Block mit deinen Regeln in `AGENTS.md`. Die Projektregeln legst du einmal selbst fest, wie in „Einmalig: Projektregeln festlegen“.
 
 ## Über dieses Repo
 
