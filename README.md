@@ -1,6 +1,6 @@
 # sdd-demo-bmad: Symfony-Demo mit BMad
 
-Dieses Repo ist die [Symfony-Demo](https://github.com/symfony/demo), ein kleiner Blog mit PHP 8.4, Symfony, Doctrine, Twig, SQLite und 53 PHPUnit-Tests. Dazu liegt die **BMad-Methode 6.12.4** im Repo, für die **GitHub Copilot CLI** und mit den Modulen `core` und `bmm`. Du klonst, startest `copilot` und legst los.
+Dieses Repo ist die [Symfony-Demo](https://github.com/symfony/demo), ein kleiner Blog mit PHP 8.4, Symfony, Doctrine, Twig, SQLite und 53 PHPUnit-Tests. Dazu liegt die **BMad-Methode 6.12.4** im Repo, für die **GitHub Copilot CLI** und mit den Modulen `core` und `bmm`. Du klonst, startest `copilot`, legst einmal die Projektregeln fest und legst los.
 
 Es gibt drei solche Repos, eins pro Framework:
 
